@@ -1,0 +1,92 @@
+import random
+
+quiz_questions = [
+    {
+        "question": "What is the largest planet in our solar system?",
+
+        "choices": ["Earth", "Mars", "Jupiter", "Venus"],
+        "correct_answer": "Jupiter"
+    },
+    {
+        "question": "Which planet is known as the Red Planet?",
+        "choices": ["Mars", "Neptune", "Mercury", "Uranus"],
+        "correct_answer": "Mars"
+    },
+    {
+        "question": "Who was the first human to walk on the moon?",
+        "choices": ["Yuri Gagarin", "Michael Collins", "Buzz Aldrin", "Neil Armstrong"],
+        "correct_answer": "Neil Armstrong"
+    },
+    {
+        "question": "What is the name of the galaxy we live in?",
+        "choices": ["Whirlpool", "Milky Way", "Triangulum", "Andromeda"],
+        "correct_answer": "Milky Way"
+    },
+    {
+        "question": "What is the smallest planet in our solar system?",
+        "choices": ["Saturn", "Mercury", "Earth", "Mars"],
+        "correct_answer": "Mercury"
+    },
+    {
+        "question": "What is the name of the first satellite sent into space?",
+        "choices": ["Apollo 11", "Voyager 1", "Hubble", "Sputnik 1"],
+        "correct_answer": "Sputnik 1"
+    }
+]
+
+def display_welcome_message():
+    print("Welcome to the Quiz Game!")
+    print("You will be presented with a series of space related questions. Answer them to test your knowledge.\n")
+
+def present_quiz_question(question, choices):
+    print(question)
+    if choices:
+        for i, choice in enumerate(choices, 1):
+            print(f"{i}. {choice}")
+
+def evaluate_user_answer(user_answer, correct_answer):
+    return user_answer.lower() == correct_answer.lower()
+
+def calculate_final_score(correct_answers, total_questions):
+    return (correct_answers / total_questions) * 100
+
+def play_quiz_game():
+    display_welcome_message()
+    score = 0
+
+    random.shuffle(quiz_questions)
+
+    for question_data in quiz_questions:
+        question = question_data["question"]
+        choices = question_data.get("choices", None)
+        correct_answer = question_data["correct_answer"]
+
+        present_quiz_question(question, choices)
+
+        user_answer = input("Your answer: ")
+
+        if evaluate_user_answer(user_answer, correct_answer):
+            print("Correct!")
+            score += 1
+        else:
+            print(f"Incorrect. The correct answer is: {correct_answer}\n")
+
+    final_score = calculate_final_score(score, len(quiz_questions))
+    print(f"You got {score} out of {len(quiz_questions)} questions correct.")
+    print(f"Your final score: {final_score:.2f}%")
+
+if __name__ == "__main__":
+    play_quiz_game()
+    
+def ask_to_play_again():
+    while True:
+        play_again = input("Do you want to play again? (yes/no): ")
+        if play_again.lower() == "yes":
+            play_quiz_game()
+        elif play_again.lower() == "no":
+            break
+        else:
+            print("Invalid input. Please enter 'yes' or 'no'.")
+
+if __name__ == "__main__":
+    ask_to_play_again()
